@@ -1,0 +1,179 @@
+/* Container styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: white;
+  }
+  
+  /* Wrapper box */
+  .wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+  
+  /* Form container */
+  .form-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .tabs .tab {
+    text-decoration: none;
+    font-weight: bold;
+    color: #999;
+    padding-bottom: 5px;
+  }
+  
+  .tabs .active {
+    color: #d40000;
+    border-bottom: 2px solid #d40000;
+  }
+
+  .tab.inactive:hover {
+    border-radius: 100px;
+    font-weight: 600;
+    background: rgba(212, 0, 0, 0.1); /* light red background */
+  }
+  
+  /* Form styling */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Form fields */
+  .form-group {
+    position: relative;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px 10px 10px 36px;
+    font-size: 1rem;
+    border: 1px solid #d40000;
+    border-radius: 6px;
+  }
+
+  .form-group input:focus {
+  border: 2px solid #d40000;
+}
+
+  .form-group label {
+    position: absolute;
+    top: -10px;
+    left: 36px;
+    background-color: white;
+    padding: 0 5px;
+    font-size: 0.85rem;
+    color: #888;
+  }
+  
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+  }
+  
+  /* Terms group */
+  .terms-group {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .terms-group input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  /* Button */
+  .login-btn {
+    background-color: #d40000;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Forgot link */
+  .forgot-password {
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  .forgot-password a,
+.form-links .link {
+  color: #d40000;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 10px;
+  transition: color 0.3s ease;
+}
+
+.forgot-password a:hover,
+.form-links .link:hover {
+  color: #a30000;
+}
+
+  
+  /* Back link */
+  .form-links {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .link {
+    color: #d40000;
+    text-decoration: none;
+  }
+  
+  /* Remove the image box */
+  .image--box {
+    display: none;
+  }
+
+  /* Style for error messages */
+.error {
+  color: #d32f2f;            /* Red tone (Material Design style) */
+  font-size: 0.9rem;         /* Slightly smaller than normal text */
+  margin-top: 4px;
+  margin-left: 2px;
+  font-weight: 500;
+}
+
+/* Optional: animate error message appearance */
+.error.ng-animate {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
+}
+
+/* Style the input border if there's an error (optional enhancement) */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border: 1px solid #d32f2f;
+  box-shadow: 0 0 0 1px rgba(211, 47, 47, 0.3);
+}
+
+/* Add spacing between fields for better layout */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+  

@@ -1,0 +1,122 @@
+<div class="signup-container">
+  <div class="form-box">
+    <h1>Client Registration</h1>
+
+    <div class="tabs">
+      <a routerLink="/login" class="tab inactive">Login</a>
+      <a routerLink="/signup-home" class="tab active">SignUp</a>
+    </div>
+    <form class="signup-form">
+      <!--Name Field (side by side)-->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first_name">First Name</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            required
+            placeholder="Enter your first name"
+            [(ngModel)]="first_name"
+          />
+        </div>
+        <div class="form-groug">
+          <label for="last_name">Last Name</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            required
+            placeholder="Enter your last name"
+            [(ngModel)]="last_name"
+          />
+        </div>
+      </div>
+      <!--Email Field-->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="exemple@domain.com"
+          [(ngModel)]="email"
+        />
+      </div>
+      <!--Phone Number Field-->
+      <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input
+          type="tel"
+          id="phone_number"
+          name="phone_number"
+          required
+          placeholder="+(216) 22 222 222"
+          [(ngModel)]="phone_number"
+        />
+        <div class="hint-text">Include your country code phone_number</div>
+      </div>
+      <!--Country Field-->
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select id="country" name="country" required [(ngModel)]="country">
+          <option value="" disabled selected></option>
+          <option *ngFor="let country of countries" [value]="country">
+            {{ country }}
+          </option>
+        </select>
+      </div>
+
+      <!--City Field-->
+      <div class="form-group">
+        <label for="city">City</label>
+        <select id="city" name="city" required [(ngModel)]="city">
+          <option value="" disabled selected></option>
+          <option *ngFor="let city of cities" [value]="city">
+            {{ city }}
+          </option>
+        </select>
+      </div>
+
+      <!--Password Field-->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="Create a secure password"
+            [(ngModel)]="password"
+          />
+        </div>
+      </div>
+      <!--Confirm Password Field-->
+      <div class="form-group">
+        <div class="password-input">
+          <label for="confirm_password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            required
+            placeholder="Confirm your password"
+            [(ngModel)]="confirm_password"
+          />
+        </div>
+      </div>
+      <!--Submit Button-->
+      <button type="submit" class="submit-btn">
+        <span>Create Account</span>
+      </button>
+      <a routerLink="/login" class="link" style="text-align: center"
+        >Already have an account? Login</a
+      >
+      <div class="form-links">
+        <a routerLink="/welcome" class="link">&larr; Back to home page</a>
+      </div>
+    </form>
+  </div>
+</div>

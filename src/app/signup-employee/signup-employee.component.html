@@ -1,0 +1,163 @@
+<div class="signup-container">
+  <div class="form-box">
+    <h1>Employee Registration</h1>
+    <div class="tabs">
+      <a routerLink="/login" class="tab inactive">Login</a>
+      <a routerLink="/signup-employee" class="tab active">SignUp</a>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit()" class="signup-form">
+      <!-- Name Fields -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input
+            type="text"
+            id="first-name"
+            name="first_name"
+            required
+            [(ngModel)]="first_name"
+          />
+          <p *ngIf="inputsError.first_nameError" class="error">
+            Please enter your first name
+          </p>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input
+            type="text"
+            id="last-name"
+            name="last_name"
+            required
+            [(ngModel)]="last_name"
+          />
+          <p *ngIf="inputsError.last_nameError" class="error">
+            Please enter your last name
+          </p>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          [(ngModel)]="email"
+        />
+        <p *ngIf="inputsError.emailError" class="error">
+          Please check your email
+        </p>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone-number">Phone Number</label>
+        <input
+          type="tel"
+          id="phone-number"
+          name="phone_number"
+          placeholder="+(216) 22 222 222"
+          [(ngModel)]="phone_number"
+        />
+        <p *ngIf="inputsError.phoneError" class="error">
+          Please enter your phone number
+        </p>
+      </div>
+
+      <!-- City -->
+      <div class="form-group">
+        <label for="city">City</label>
+        <select id="city" name="city" required [(ngModel)]="city">
+          <option value="" disabled selected></option>
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+        <p *ngIf="inputsError.cityError" class="error">
+          Please select your city
+        </p>
+      </div>
+
+      <!-- Departement -->
+      <div class="form-group">
+        <label for="departement">Departement</label>
+        <select
+          id="departement"
+          name="departement"
+          required
+          [(ngModel)]="departement"
+        >
+          <option value="" disabled selected></option>
+          <option
+            *ngFor="let departement of departements"
+            [value]="departement"
+          >
+            {{ departement }}
+          </option>
+        </select>
+        <p *ngIf="inputsError.departementError" class="error">
+          Please select your departement
+        </p>
+      </div>
+
+      <!-- Badge -->
+      <div class="form-group">
+        <label for="badge">Badge number</label>
+        <input
+          type="text"
+          id="badge"
+          name="badge"
+          required
+          [(ngModel)]="badge"
+        />
+        <p *ngIf="inputsError.badgeError" class="error">
+          Please enter your badge number
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          [(ngModel)]="password"
+        />
+        <p *ngIf="inputsError.passwordError" class="error">
+          Create a secure password
+        </p>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+        <label for="confirm-password">Confirm your password</label>
+        <input
+          type="password"
+          id="confirm-password"
+          name="confirm_password"
+          required
+          [(ngModel)]="confirm_password"
+        />
+        <p *ngIf="inputsError.confirm_passwordError" class="error">
+          Confirm your password
+        </p>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn">
+        <span>Create Account</span>
+      </button>
+
+      <!-- Links -->
+      <a routerLink="/login" class="link" style="text-align: center">
+        Already have an account? Login
+      </a>
+      <div class="form-links">
+        <a routerLink="/welcome" class="link home">&larr; Back to home page</a>
+      </div>
+    </form>
+  </div>
+</div>

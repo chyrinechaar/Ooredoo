@@ -1,0 +1,133 @@
+<div class="container mt-4">
+  <!-- Top Cards Row (only when no selection) -->
+  <div class="row g-3 mb-4" *ngIf="!selectedCategory">
+    <div class="col-md-6 col-lg-3" *ngFor="let card of cards; let i = index">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title text-danger">{{ card.title }}</h5>
+          <p class="card-text">This month's estimations</p>
+          <button class="btn btn-danger" (click)="handleCardAction(i + 1)">
+            Open
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4" *ngIf="selectedCategory">
+    <li class="nav-item">
+      <button
+        class="nav-link"
+        [class.active]="selectedTab === 'summary'"
+        (click)="selectTab('summary')"
+      >
+        Summary
+      </button>
+    </li>
+    <li class="nav-item">
+      <button
+        class="nav-link"
+        [class.active]="selectedTab === 'details'"
+        (click)="selectTab('details')"
+      >
+        Details
+      </button>
+    </li>
+  </ul>
+
+  <!-- Content Area -->
+  <div *ngIf="selectedCategory" class="d-flex">
+    <!-- Sidebar Cards for Switching -->
+    <div class="me-4" style="min-width: 180px">
+      <div
+        class="card mb-2"
+        *ngFor="let card of cards; let i = index"
+        [ngClass]="{
+          'border border-danger': selectedCategory === card.key
+        }"
+      >
+        <div class="card-body p-2">
+          <h6 class="card-title text-danger">{{ card.title }}</h6>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            (click)="handleCardAction(i + 1)"
+          >
+            Open
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow-1">
+      <!-- Summary Chart -->
+      <div *ngIf="selectedTab === 'summary'">
+        <h5 class="text-capitalize mb-3">
+          {{ selectedCategory }} Summary (Sales)
+        </h5>
+        <div class="d-flex">
+          <!-- Chart Icons -->
+          <div
+            class="me-4 d-flex flex-column align-items-center border-end pe-3"
+          >
+            <h6 class="mb-3">Chart Type</h6>
+            <button
+              style="background-color: rgb(255, 133, 133)"
+              class="chart-icons btn btn-outline-secondary mb-2"
+              *ngFor="let type of chartTypes"
+              (click)="onChartTypeChange(type.value)"
+              [class.active]="selectedChartType === type.value"
+              [title]="type.label"
+            >
+              <i [class]="type.icon" class="fs-4"></i>
+            </button>
+          </div>
+
+          <!-- Chart Area -->
+          <div
+            class="flex-grow-1 d-flex justify-content-center align-items-center"
+          >
+            <div style="width: 350px; height: 350px">
+              <canvas
+                baseChart
+                [data]="pieChartData"
+                [type]="selectedChartType"
+                [options]="pieChartOptions"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Details Table -->
+      <div *ngIf="selectedTab === 'details'">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="text-capitalize m-0">{{ selectedCategory }} Details</h5>
+          <button class="btn btn-outline-success" (click)="downloadExcel()">
+            <i class="bi bi-download me-1"></i> Download Excel
+          </button>
+        </div>
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th *ngFor="let key of currentData[0] | keyvalue">
+                {{ key.key }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of currentData">
+              <td *ngFor="let val of row | keyvalue">{{ val.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Link -->
+  <div class="form-links mt-4">
+    <a routerLink="/welcome" class="link">&larr; Back to home page</a>
+  </div>
+</div>

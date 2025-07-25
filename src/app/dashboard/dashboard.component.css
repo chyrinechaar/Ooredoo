@@ -1,0 +1,105 @@
+/* Ooredoo red theme base */
+:host {
+  display: block;
+  background-color: #f8f9fa;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Tabs */
+.nav-tabs .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #333;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #e60000;
+}
+
+.nav-tabs .nav-link.active {
+  color: #e60000;
+  border-bottom-color: #e60000;
+  background-color: transparent;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #e60000;
+  font-weight: 600;
+}
+
+/* Buttons by category */
+.btn-primary {
+  background-color: #e60000;
+  border-color: #e60000;
+}
+
+.btn-primary:hover {
+  background-color: #cc0000;
+  border-color: #cc0000;
+}
+
+.btn-success {
+  background-color: #e60000;
+  border-color: #e60000;
+}
+
+.btn-warning {
+  background-color: #e60000;
+  border-color: #e60000;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Table */
+.table {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #e60000;
+  color: white;
+  text-transform: capitalize;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Back to Home Page Link */
+.form-links {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.form-links .link {
+  color: #e60000;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.form-links .link:hover {
+  text-decoration: underline;
+  color: #cc0000;
+}
+
