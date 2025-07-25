@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { EmployeeService, EmployeeRegistrationData } from '../services/employee.service';
 
 @Component({
   selector: 'app-signup-employee',
@@ -9,7 +11,8 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, 
             RouterModule, 
             FormsModule, 
-            ReactiveFormsModule
+            ReactiveFormsModule,
+            HttpClientModule
   ],
   templateUrl: './signup-employee.component.html',
   styleUrl: './signup-employee.component.css'
@@ -45,10 +48,11 @@ export class SignupEmployeeComponent {
   password: string = '';
   confirm_password: string = '';
 
-  
+  isSubmitting: boolean = false;
+  successMessage: string = '';
+  errorMessage: string = '';
 
   inputsError = {
-
     first_nameError: false,
     last_nameError: false,
     emailError: false,
@@ -58,11 +62,18 @@ export class SignupEmployeeComponent {
     badgeError: false,
     passwordError: false,
     confirm_passwordError: false
-
   }
 
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {}
 
   onSubmit() {
+    // Reset messages
+    this.successMessage = '';
+    this.errorMessage = '';
+    
     this.inputsError = {
       first_nameError: !this.first_name,
       last_nameError: !this.last_name,
@@ -83,8 +94,68 @@ export class SignupEmployeeComponent {
       return; // stop here and show all errors
     }
   
-    // 👉 All validations passed - proceed with form submission
-    // ... call your service here
+    // All validations passed - proceed with form submission
+    this.isSubmitting = true;
+    
+    const registrationData: EmployeeRegistrationData = {
+      firstName: this.first_name,
+      lastName: this.last_name,
+      email: this.email,
+      phoneNumber: this.phone_number,
+      city: this.city,
+      departement: this.departement,
+      badge: this.badge,
+      password: this.password,
+      confirmPassword: this.confirm_password
+    };
+
+    this.employeeService.registerEmployee(registrationData).subscribe({
+      next: (response) => {
+        this.isSubmitting = false;
+        if (response.success) {
+          this.successMessage = response.message;
+          // Reset form
+          this.resetForm();
+          // Optionally redirect to login page after 2 seconds
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.errorMessage = response.message;
+        }
+      },
+      error: (error) => {
+        this.isSubmitting = false;
+        console.error('Registration error:', error);
+        if (error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'An error occurred during registration. Please try again.';
+        }
+      }
+    });
   }
 
+  private resetForm() {
+    this.first_name = '';
+    this.last_name = '';
+    this.email = '';
+    this.phone_number = '';
+    this.city = '';
+    this.departement = '';
+    this.badge = '';
+    this.password = '';
+    this.confirm_password = '';
+    this.inputsError = {
+      first_nameError: false,
+      last_nameError: false,
+      emailError: false,
+      phoneError: false,
+      cityError: false,
+      departementError: false,
+      badgeError: false,
+      passwordError: false,
+      confirm_passwordError: false
+    };
+  }
 }
