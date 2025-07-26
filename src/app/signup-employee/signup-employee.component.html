@@ -6,32 +6,20 @@
       <a routerLink="/signup-employee" class="tab active">SignUp</a>
     </div>
 
-    <form #form="ngForm" (ngSubmit)="onSubmit()" class="signup-form">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
       <!-- Name Fields -->
       <div class="form-row">
         <div class="form-group">
           <label for="first-name">First Name</label>
-          <input
-            type="text"
-            id="first-name"
-            name="first_name"
-            required
-            [(ngModel)]="first_name"
-          />
-          <p *ngIf="inputsError.first_nameError" class="error">
+          <input type="text" id="first-name" formControlName="firstName" />
+          <p *ngIf="inputsError.firstNameError" class="error">
             Please enter your first name
           </p>
         </div>
         <div class="form-group">
           <label for="last-name">Last Name</label>
-          <input
-            type="text"
-            id="last-name"
-            name="last_name"
-            required
-            [(ngModel)]="last_name"
-          />
-          <p *ngIf="inputsError.last_nameError" class="error">
+          <input type="text" id="last-name" formControlName="lastName" />
+          <p *ngIf="inputsError.lastNameError" class="error">
             Please enter your last name
           </p>
         </div>
@@ -40,15 +28,9 @@
       <!-- Email -->
       <div class="form-group">
         <label for="email">Email Address</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          [(ngModel)]="email"
-        />
+        <input type="email" id="email" formControlName="email" />
         <p *ngIf="inputsError.emailError" class="error">
-          Please check your email
+          Please enter a valid ooredoo.tn email (e.g., name&#64;ooredoo.tn)
         </p>
       </div>
 
@@ -58,20 +40,19 @@
         <input
           type="tel"
           id="phone-number"
-          name="phone_number"
+          formControlName="phoneNumber"
           placeholder="+(216) 22 222 222"
-          [(ngModel)]="phone_number"
         />
         <p *ngIf="inputsError.phoneError" class="error">
-          Please enter your phone number
+          Please enter a valid phone number (e.g., +21612345678)
         </p>
       </div>
 
       <!-- City -->
       <div class="form-group">
         <label for="city">City</label>
-        <select id="city" name="city" required [(ngModel)]="city">
-          <option value="" disabled selected></option>
+        <select id="city" formControlName="city">
+          <option value="" disabled selected>Select a city</option>
           <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
         </select>
         <p *ngIf="inputsError.cityError" class="error">
@@ -82,13 +63,8 @@
       <!-- Departement -->
       <div class="form-group">
         <label for="departement">Departement</label>
-        <select
-          id="departement"
-          name="departement"
-          required
-          [(ngModel)]="departement"
-        >
-          <option value="" disabled selected></option>
+        <select id="departement" formControlName="departement">
+          <option value="" disabled selected>Select a department</option>
           <option
             *ngFor="let departement of departements"
             [value]="departement"
@@ -97,37 +73,25 @@
           </option>
         </select>
         <p *ngIf="inputsError.departementError" class="error">
-          Please select your departement
+          Please select your department
         </p>
       </div>
 
       <!-- Badge -->
       <div class="form-group">
         <label for="badge">Badge number</label>
-        <input
-          type="text"
-          id="badge"
-          name="badge"
-          required
-          [(ngModel)]="badge"
-        />
+        <input type="text" id="badge" formControlName="badge" placeholder="BDG..." />
         <p *ngIf="inputsError.badgeError" class="error">
-          Please enter your badge number
+          Badge must start with BDG (e.g., BDG123)
         </p>
       </div>
 
       <!-- Password -->
       <div class="form-group">
         <label for="password">Password *</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          [(ngModel)]="password"
-        />
+        <input type="password" id="password" formControlName="password" />
         <p *ngIf="inputsError.passwordError" class="error">
-          Create a secure password
+          Password must be 8+ characters with uppercase, lowercase, number, and special character (e.g., Password123!)
         </p>
       </div>
 
@@ -137,17 +101,15 @@
         <input
           type="password"
           id="confirm-password"
-          name="confirm_password"
-          required
-          [(ngModel)]="confirm_password"
+          formControlName="confirmPassword"
         />
-        <p *ngIf="inputsError.confirm_passwordError" class="error">
-          Confirm your password
+        <p *ngIf="inputsError.confirmPasswordError" class="error">
+          Passwords do not match
         </p>
       </div>
 
       <!-- Submit -->
-      <button type="submit" class="submit-btn">
+      <button type="submit" class="submit-btn" [disabled]="signupForm.invalid">
         <span>Create Account</span>
       </button>
 

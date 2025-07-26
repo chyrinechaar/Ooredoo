@@ -3,9 +3,9 @@
     <div class="form-box">
       <div class="tabs">
         <a routerLink="/login" class="tab active">Login</a>
-        <a routerLink="/signup-home" class="tab inactive">SignUp</a>
+        <a routerLink="/signup-employee" class="tab inactive">SignUp</a>
       </div>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
         <div class="form-group">
           <span class="icon">
             <svg
@@ -24,13 +24,11 @@
           <input
             type="email"
             id="email"
-            name="email"
-            required
-            [(ngModel)]="email"
-            placeholder=""
+            formControlName="email"
+            placeholder="name@ooredoo.tn"
           />
           <p *ngIf="inputsError.emailError" class="error">
-            Please check your email
+            Please enter a valid ooredoo.tn email (e.g., name&#64;ooredoo.tn)
           </p>
           <label for="email">Email</label>
         </div>
@@ -53,32 +51,34 @@
           <input
             type="password"
             id="password"
-            name="password"
-            required
-            [(ngModel)]="password"
+            formControlName="password"
             placeholder=""
           />
           <p *ngIf="inputsError.passwordError" class="error">
-            Create a secure password
+            Please enter your password
           </p>
           <label for="password">Password</label>
         </div>
         <div class="terms-group">
           <label class="checkbox-container">
-            <input type="checkbox" required />
+            <input type="checkbox" formControlName="terms" />
             <span class="checkmark"></span>
             I accept the terms and conditions
           </label>
+          <p *ngIf="inputsError.termsError" class="error">
+            You must accept the terms and conditions
+          </p>
         </div>
-        <button type="submit" class="login-btn">LOGIN</button>
+        <button type="submit" class="login-btn" [disabled]="loginForm.invalid">
+          LOGIN
+        </button>
         <div class="forgot-password">
-          <a>Forgot Password</a>
+          <a routerLink="/forgot-password">Forgot Password</a>
         </div>
         <div class="form-links">
           <a routerLink="/welcome" class="link">&larr; Back to home page</a>
         </div>
       </form>
-      <!--Add new image section-->
       <div class="image--box">
         <div class="image-text">
           <h1>ooredoo</h1>

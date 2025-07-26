@@ -1,7 +1,7 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartType, ChartData } from 'chart.js';
 import {  ChartOptions } from 'chart.js';
@@ -16,7 +16,7 @@ import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-dashboard',
   standalone:true,
-  imports: [RouterOutlet, CommonModule, FormsModule, RouterModule, NgChartsModule, NgClass],
+  imports: [ CommonModule, FormsModule, RouterModule, NgChartsModule, NgClass],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
