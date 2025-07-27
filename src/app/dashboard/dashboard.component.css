@@ -103,3 +103,26 @@
   color: #cc0000;
 }
 
+
+/* Card hover effects */
+.card {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px !important; /* Override Bootstrap if needed */
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  border-color: #dc3545 !important; /* Red border on hover */
+}
+
+/* Optional: Add animation to the "View Details" button */
+.btn-danger {
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #ff596c; /* Darker red on hover */
+  transform: scale(1.02);
+}

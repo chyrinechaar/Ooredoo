@@ -1,14 +1,37 @@
 <div class="container mt-4">
+  <button class="btn btn-danger w-100" (click)="incrementSales()">+1</button>
   <!-- Top Cards Row (only when no selection) -->
   <div class="row g-3 mb-4" *ngIf="!selectedCategory">
-    <div class="col-md-6 col-lg-3" *ngFor="let card of cards; let i = index">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title text-danger">{{ card.title }}</h5>
-          <p class="card-text">This month's estimations</p>
-          <button class="btn btn-danger" (click)="handleCardAction(i + 1)">
-            Open
-          </button>
+    <div
+      class="col-12 col-md-6 col-lg-3"
+      *ngFor="let card of cards; let i = index"
+    >
+      <div class="card h-100 bg-light" style="padding-top: 30px; border-color: red; text-align: center;">
+        <div class="card-body d-flex flex-column">
+          <h3 class="card-title text-danger text-capitalize mb-5">
+            {{ card.title }}
+          </h3>
+
+          <div class="mt-auto">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <span class="fw-bold">Total Sales:</span>
+              <span class="badge bg-danger rounded-pill">{{
+                card.totalSales
+              }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-5">
+              <span class="fw-bold">Best Seller:</span>
+              <span class="text-truncate">{{ card.bestSeller }}</span>
+            </div>
+
+            <button
+              class="btn btn-danger w-100 mb-5"
+              (click)="handleCardAction(i + 1)"
+            >
+              View Details
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -43,18 +66,16 @@
       <div
         class="card mb-2"
         *ngFor="let card of cards; let i = index"
+        (click)="handleCardAction(i + 1)"
         [ngClass]="{
-          'border border-danger': selectedCategory === card.key
+          'border border-danger': selectedCategory === card.key,
+          'cursor-pointer': true
         }"
       >
         <div class="card-body p-2">
-          <h6 class="card-title text-danger">{{ card.title }}</h6>
-          <button
-            class="btn btn-sm btn-outline-danger"
-            (click)="handleCardAction(i + 1)"
-          >
-            Open
-          </button>
+          <h5 class="card-title text-danger text-capitalize">
+            {{ card.title }}
+          </h5>
         </div>
       </div>
     </div>
@@ -73,11 +94,13 @@
           >
             <h6 class="mb-3">Chart Type</h6>
             <button
-              style="background-color: rgb(255, 133, 133)"
-              class="chart-icons btn btn-outline-secondary mb-2"
               *ngFor="let type of chartTypes"
               (click)="onChartTypeChange(type.value)"
               [class.active]="selectedChartType === type.value"
+              class="btn btn-outline-secondary mb-2"
+              [style.backgroundColor]="
+                selectedChartType === type.value ? 'rgb(255, 133, 133)' : ''
+              "
               [title]="type.label"
             >
               <i [class]="type.icon" class="fs-4"></i>
@@ -94,7 +117,8 @@
                 [data]="pieChartData"
                 [type]="selectedChartType"
                 [options]="pieChartOptions"
-              ></canvas>
+              >
+              </canvas>
             </div>
           </div>
         </div>
@@ -108,7 +132,10 @@
             <i class="bi bi-download me-1"></i> Download Excel
           </button>
         </div>
-        <table class="table table-bordered table-hover">
+        <table
+          class="table table-bordered table-hover"
+          *ngIf="currentData.length > 0"
+        >
           <thead>
             <tr>
               <th *ngFor="let key of currentData[0] | keyvalue">
@@ -122,6 +149,9 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="currentData.length === 0" class="text-muted">
+          No data available to display.
+        </div>
       </div>
     </div>
   </div>
