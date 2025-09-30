@@ -1,163 +1,79 @@
 <div class="container mt-4">
-  <button class="btn btn-danger w-100" (click)="incrementSales()">+1</button>
-  <!-- Top Cards Row (only when no selection) -->
-  <div class="row g-3 mb-4" *ngIf="!selectedCategory">
-    <div
-      class="col-12 col-md-6 col-lg-3"
-      *ngFor="let card of cards; let i = index"
-    >
-      <div class="card h-100 bg-light" style="padding-top: 30px; border-color: red; text-align: center;">
-        <div class="card-body d-flex flex-column">
-          <h3 class="card-title text-danger text-capitalize mb-5">
-            {{ card.title }}
-          </h3>
-
-          <div class="mt-auto">
-            <div class="d-flex justify-content-between align-items-center mb-5">
-              <span class="fw-bold">Total Sales:</span>
-              <span class="badge bg-danger rounded-pill">{{
-                card.totalSales
-              }}</span>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-5">
-              <span class="fw-bold">Best Seller:</span>
-              <span class="text-truncate">{{ card.bestSeller }}</span>
-            </div>
-
-            <button
-              class="btn btn-danger w-100 mb-5"
-              (click)="handleCardAction(i + 1)"
-            >
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tabs -->
-  <ul class="nav nav-tabs mb-4" *ngIf="selectedCategory">
+  <!-- Navigation Tabs -->
+  <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
       <button
         class="nav-link"
-        [class.active]="selectedTab === 'summary'"
-        (click)="selectTab('summary')"
+        [class.active]="selectedNav === 'dashboard'"
+        (click)="selectedNav = 'dashboard'"
       >
-        Summary
+        Dashboard
       </button>
     </li>
     <li class="nav-item">
       <button
         class="nav-link"
-        [class.active]="selectedTab === 'details'"
-        (click)="selectTab('details')"
+        [class.active]="selectedNav === 'products'"
+        (click)="selectedNav = 'products'"
       >
-        Details
+        Products
       </button>
     </li>
   </ul>
 
-  <!-- Content Area -->
-  <div *ngIf="selectedCategory" class="d-flex">
-    <!-- Sidebar Cards for Switching -->
-    <div class="me-4" style="min-width: 180px">
+  <!-- Dashboard View -->
+  <ng-container *ngIf="selectedNav === 'dashboard'">
+    <div class="row g-3 mb-4">
       <div
-        class="card mb-2"
-        *ngFor="let card of cards; let i = index"
-        (click)="handleCardAction(i + 1)"
-        [ngClass]="{
-          'border border-danger': selectedCategory === card.key,
-          'cursor-pointer': true
-        }"
+        class="col-12 col-md-6 col-lg-3"
+        *ngFor="let card of cards"
       >
-        <div class="card-body p-2">
-          <h5 class="card-title text-danger text-capitalize">
-            {{ card.title }}
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="flex-grow-1">
-      <!-- Summary Chart -->
-      <div *ngIf="selectedTab === 'summary'">
-        <h5 class="text-capitalize mb-3">
-          {{ selectedCategory }} Summary (Sales)
-        </h5>
-        <div class="d-flex">
-          <!-- Chart Icons -->
-          <div
-            class="me-4 d-flex flex-column align-items-center border-end pe-3"
-          >
-            <h6 class="mb-3">Chart Type</h6>
-            <button
-              *ngFor="let type of chartTypes"
-              (click)="onChartTypeChange(type.value)"
-              [class.active]="selectedChartType === type.value"
-              class="btn btn-outline-secondary mb-2"
-              [style.backgroundColor]="
-                selectedChartType === type.value ? 'rgb(255, 133, 133)' : ''
-              "
-              [title]="type.label"
-            >
-              <i [class]="type.icon" class="fs-4"></i>
-            </button>
-          </div>
-
-          <!-- Chart Area -->
-          <div
-            class="flex-grow-1 d-flex justify-content-center align-items-center"
-          >
-            <div style="width: 350px; height: 350px">
-              <canvas
-                baseChart
-                [data]="pieChartData"
-                [type]="selectedChartType"
-                [options]="pieChartOptions"
+        <div
+          class="card h-100 bg-light"
+          style="padding-top: 30px; border-color: red; text-align: center"
+        >
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title text-danger text-capitalize mb-5">
+              {{ card.title }}
+            </h3>
+            <div class="mt-auto">
+              <div
+                class="d-flex justify-content-between align-items-center mb-5"
               >
-              </canvas>
+                <span class="fw-bold">Total Sales:</span>
+                <span class="badge bg-danger rounded-pill">
+                  {{ card.totalSales }}
+                </span>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mb-5"
+              >
+                <span class="fw-bold">Best Seller:</span>
+                <span class="text-truncate">{{ card.bestSeller }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </ng-container>
 
-      <!-- Details Table -->
-      <div *ngIf="selectedTab === 'details'">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="text-capitalize m-0">{{ selectedCategory }} Details</h5>
-          <button class="btn btn-outline-success" (click)="downloadExcel()">
-            <i class="bi bi-download me-1"></i> Download Excel
-          </button>
-        </div>
-        <table
-          class="table table-bordered table-hover"
-          *ngIf="currentData.length > 0"
-        >
-          <thead>
-            <tr>
-              <th *ngFor="let key of currentData[0] | keyvalue">
-                {{ key.key }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of currentData">
-              <td *ngFor="let val of row | keyvalue">{{ val.value }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div *ngIf="currentData.length === 0" class="text-muted">
-          No data available to display.
+  <!-- Products View -->
+  <ng-container *ngIf="selectedNav === 'products'">
+    <div class="row g-3">
+      <div
+        class="col-md-6 col-lg-4"
+        *ngFor="let product of products"
+      >
+        <div class="card border-primary h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p>Category: {{ product.category }}</p>
+            <p>Sales: {{ product.salesCount }}</p>
+            <p>Price: {{ product.price | currency }}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Back Link -->
-  <div class="form-links mt-4">
-    <a routerLink="/welcome" class="link">&larr; Back to home page</a>
-  </div>
+  </ng-container>
 </div>
